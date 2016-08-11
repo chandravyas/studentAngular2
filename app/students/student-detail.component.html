@@ -1,0 +1,35 @@
+<div class='panel panel-primary' *ngIf='student'>
+    <div class='panel-heading' style='font-size:large'>
+        {{pageTitle + ': ' + student.studentFirstName+' '+student.studentLastName }}
+    </div> 
+
+    <div class='panel-body'>
+        <div class='row'>
+            <div class='col-md-6'>
+                <div class='row'>
+                    <div class='col-md-3'>studentId:</div>
+                    <div class='col-md-6'>{{student.studentId}}</div>
+                </div>
+                <div class='row'>
+                    <div class='col-md-3'>studentFirstName:</div>
+                    <div class='col-md-6'>{{student.studentFirstName}}</div>
+                </div>
+                <div class='row'>
+                    <div class='col-md-3'>studentLastName:</div>
+                    <div class='col-md-6'>{{student.studentLastName}}</div>
+                </div>
+                <div class='row'>
+                    <div class='col-md-3'>studentTimestamp:</div>
+                    <div class='col-md-6'>{{student.studentTimestamp}}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class='panel-footer'>
+        <a class='btn btn-default' (click)='onBack()' style='width:80px'>
+            <i class='glyphicon glyphicon-chevron-left'></i> Back
+        </a>
+    </div>
+</div>
+
