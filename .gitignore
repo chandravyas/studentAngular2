@@ -129,3 +129,6 @@ mvnw
 mvnw.cmd
 
 node_modules/
+*.js
+*.js.map
+

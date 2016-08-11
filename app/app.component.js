@@ -1,4 +1,4 @@
-System.register(['angular2/core', 'angular2/http', 'rxjs/Rx', 'angular2/router', './students/student-list.component', './students/student.service', './students/student-detail.component'], function(exports_1, context_1) {
+System.register(['angular2/core', 'angular2/http', 'rxjs/Rx', 'angular2/router', './students/student-list.component', './students/student.service', './students/student-detail.component', './students/student-create.component'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,7 +10,7 @@ System.register(['angular2/core', 'angular2/http', 'rxjs/Rx', 'angular2/router',
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, http_1, router_1, student_list_component_1, student_service_1, student_detail_component_1;
+    var core_1, http_1, router_1, student_list_component_1, student_service_1, student_detail_component_1, student_create_component_1;
     var AppComponent;
     return {
         setters:[
@@ -32,11 +32,14 @@ System.register(['angular2/core', 'angular2/http', 'rxjs/Rx', 'angular2/router',
             },
             function (student_detail_component_1_1) {
                 student_detail_component_1 = student_detail_component_1_1;
+            },
+            function (student_create_component_1_1) {
+                student_create_component_1 = student_create_component_1_1;
             }],
         execute: function() {
             AppComponent = (function () {
                 function AppComponent() {
-                    this.pageTitle = 'Students Management';
+                    this.pageTitle = 'Students Management new';
                 }
                 AppComponent = __decorate([
                     core_1.Component({
@@ -49,7 +52,8 @@ System.register(['angular2/core', 'angular2/http', 'rxjs/Rx', 'angular2/router',
                     }),
                     router_1.RouteConfig([
                         { path: '/students', name: 'Students', component: student_list_component_1.StudentListComponent },
-                        { path: '/student/:id', name: 'StudentDetail', component: student_detail_component_1.StudentDetailComponent }
+                        { path: '/student/:id', name: 'StudentDetail', component: student_detail_component_1.StudentDetailComponent },
+                        { path: '/student', name: 'StudentCreate', component: student_create_component_1.StudentCreateComponent }
                     ]), 
                     __metadata('design:paramtypes', [])
                 ], AppComponent);

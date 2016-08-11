@@ -1,8 +1,21 @@
 /* Defines the student entity */
 export interface IStudent {
-    studentId: number;
-    studentFirstName: string;
-    studentLastName: string;
-    studentTimestamp: Date;
+    id: number;
+    name: string;
+    department: string;
+    programtype: string;
+    yearjoined: number;
+    yearcomplete: number;
+}
+
+export class Student implements IStudent {
+     id: number;
+    name: string;
+    department: string;
+    programtype: string;
+    yearjoined: number;
+    yearcomplete: number;
+
+
 }
 

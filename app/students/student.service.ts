@@ -1,5 +1,5 @@
 import { Injectable } from 'angular2/core';
-import { Http, Response } from 'angular2/http';
+import { Http, Response,Headers } from 'angular2/http';
 
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/do';
@@ -9,7 +9,8 @@ import { IStudent } from './student';
 
 @Injectable()
 export class StudentService {
-    private _productUrl = 'api/students/students.json';
+    //private _productUrl = 'api/students/students.json';
+     private _productUrl = 'http://localhost:8080/api/v1/students';
 
     constructor(private _http: Http) { }
 
@@ -22,8 +23,27 @@ export class StudentService {
 
     getStudent(id: number): Observable<IStudent> {
         return this.getStudents()
-            .map((students: IStudent[]) => students.find(s => s.studentId === id));
+            .map((students: IStudent[]) => students.find(s => s.id === id));
     }
+
+    updateStudent (student: IStudent) {
+    let url = "http://localhost:8080/api/v1/students/";
+    let header = new Headers({'Content-Type': 'application/json'});
+
+    return this._http.put(url+student.id, JSON.stringify(student), {headers: header});
+  }
+
+    createStudent (student: IStudent) {
+    let url = "http://localhost:8080/api/v1/students/";
+    let header = new Headers({'Content-Type': 'application/json'});
+    return this._http.post(url, JSON.stringify(student), {headers: header});
+  }
+
+      deleteStudent (studentid: number) {
+    let url = "http://localhost:8080/api/v1/students/";
+     let header = new Headers({'Content-Type': 'application/json'});
+    return this._http.delete(url+studentid,{headers: header}).catch(this.handleError);
+  }
 
     private handleError(error: Response) {
         // in a real world app, we may send the server to some remote logging infrastructure

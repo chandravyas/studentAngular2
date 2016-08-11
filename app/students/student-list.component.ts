@@ -6,61 +6,81 @@ import { StudentService } from './student.service';
 import { StudentFilterPipe } from './student-filter.pipe';
 import {OrderBy} from "./orderBy"
 import {Format} from "./format"
+import {Response} from 'angular2/http';
+import { Router } from 'angular2/router';
 
 @Component({
-    templateUrl: 'app/students/student-list.component.html',
-    styleUrls: ['app/students/student-list.component.css'],
-    pipes: [StudentFilterPipe,OrderBy,Format],
-    directives: [ROUTER_DIRECTIVES]
+  templateUrl: 'app/students/student-list.component.html',
+  styleUrls: ['app/students/student-list.component.css'],
+  pipes: [StudentFilterPipe, OrderBy, Format],
+  directives: [ROUTER_DIRECTIVES]
 })
 export class StudentListComponent implements OnInit {
-    pageTitle: string = 'Student List';
-    students: IStudent[];
-    listFilter: string = '';
-    errorMessage: string;
-    columns: any[]=[
+  pageTitle: string = 'Student List';
+  students: IStudent[];
+  listFilter: string = '';
+  errorMessage: string;
+  columns: any[] = [
     {
-      display: 'studentId', //The text to display
-      variable: 'studentId', //The name of the key that's apart of the data array
+      display: 'id', //The text to display
+      variable: 'id', //The name of the key that's apart of the data array
       filter: 'number' //The type data type of the column (number, text, date, etc.)
     },
     {
-      display: 'studentFirstName', 
-      variable: 'studentFirstName', //The name of the key that's apart of the data array
+      display: 'name',
+      variable: 'name', //The name of the key that's apart of the data array
       filter: 'text' //The type data type of the column (number, text, date, etc.)
     },
     {
-      display: 'studentLastName', 
-      variable: 'studentLastName', //The name of the key that's apart of the data array
+      display: 'department',
+      variable: 'department', //The name of the key that's apart of the data array
       filter: 'text' //The type data type of the column (number, text, date, etc.)
     },
     {
-      display: 'studentTimestamp', //The text to display
-      variable: 'studentTimestamp', //The name of the key that's apart of the data array
-      filter: 'dateTime' //The type data type of the column (number, text, date, etc.)
+      display: 'programtype', //The text to display
+      variable: 'programtype', //The name of the key that's apart of the data array
+      filter: 'text' //The type data type of the column (number, text, date, etc.)
+    },
+    {
+      display: 'yearjoined', //The text to display
+      variable: 'yearjoined', //The name of the key that's apart of the data array
+      filter: 'number' //The type data type of the column (number, text, date, etc.)
+    },
+    {
+      display: 'yearcomplete', //The text to display
+      variable: 'yearcomplete', //The name of the key that's apart of the data array
+      filter: 'number' //The type data type of the column (number, text, date, etc.)
     }
+
   ];
-    sort: any={
-    column: 'studentId', //to match the variable of one of the columns
+  sort: any = {
+    column: 'id', //to match the variable of one of the columns
     descending: false
   };
-  
 
-    constructor(private _studentService: StudentService) {
 
-    }
 
-    ngOnInit(): void {
-           this._studentService.getStudents()
-                     .subscribe(students => this.students = students,
-                       error =>  this.errorMessage = <any>error);
-    }
+  constructor(private _studentService: StudentService,private _router: Router) {
 
-    selectedClass(columnName): string{
+  }
+
+  ngOnInit(): void {
+ this.refreshStudentsList();
+  }
+
+  refreshStudentsList():void
+  {
+    this._studentService.getStudents()
+      .subscribe(students => this.students = students,
+      error => this.errorMessage = <any>error);
+   // alert('In ng INit list compoent after exec');
+  }
+
+  selectedClass(columnName): string {
     return columnName == this.sort.column ? 'sort-' + this.sort.descending : 'false';
   }
-  
-  changeSorting(columnName): void{
+
+  changeSorting(columnName): void {
     var sort = this.sort;
     if (sort.column == columnName) {
       sort.descending = !sort.descending;
@@ -69,8 +89,29 @@ export class StudentListComponent implements OnInit {
       sort.descending = false;
     }
   }
-  
-  convertSorting(): string{
+
+  convertSorting(): string {
     return this.sort.descending ? '-' + this.sort.column : this.sort.column;
   }
+
+  deleteStudentEvent(studentid:number,i:number)
+    {
+        this._studentService.deleteStudent(studentid).
+        subscribe(
+            (response:Response)=>{this._router.navigate(['Students']);
+             this.refreshStudentsList();
+            console.log('deleted Successfully!!'); },
+            function(error) { console.log("Error happened" + error)},
+   function() { console.log("delete is completed");
+              });
+    }
+
+    // deleteDomElement()
+    // {
+    //      let student: IStudent={id:-1,name:'chandra',department:'departmentname',programtype:'program',yearjoined:10,yearcomplete:11};
+
+    //     this.students = [student];
+    // }
+
+
 }

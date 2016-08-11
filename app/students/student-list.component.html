@@ -7,15 +7,26 @@
     <div class='panel-body'>
         <div class='row'>
             <div class='col-md-2'>Filter by:</div>
-            <div class='col-md-4'>
+            <div class='col-sm-3'>
                 <input type='text' [(ngModel)]='listFilter' />
+                <!--<input type='text' #filterValue (keyup)="0"/>-->
             </div>
+            <div class='col-md-3'>
+          <button class="btn btn-sm btn-primary btn-block" [routerLink]="['StudentCreate']" >Create Student</button>
+            </div>            
         </div>
+
         <div class='row' *ngIf='listFilter'>
             <div class='col-md-6'>
                 <h3>Filtered by: {{listFilter}} </h3>
             </div>
         </div>
+        <!--<div class='row'>
+            <div class='col-md-7'>
+        <button class="btn btn-sm btn-primary btn-block"  (click)="deleteStudentEvent(student.id)">Create</button>
+            </div>
+        </div>-->
+
 
         <div class='has-error' *ngIf='errorMessage'>{{errorMessage}}</div>
 
@@ -23,20 +34,24 @@
             <table class="table table-hover table-striped table-sortable" *ngIf='students && students.length'>
                 <thead>
                     <tr>
-                        <th *ngFor="#column of columns" [class]="selectedClass(column.variable)" (click)="changeSorting(column.variable)">
+                        <th *ngFor="let column of columns" [class]="selectedClass(column.variable)" (click)="changeSorting(column.variable)">
                             {{column.display}}
                         </th>
                         
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor='#student of students | studentFilter:listFilter | orderBy : convertSorting()'>
-                        <td *ngFor="#column of columns">
+                    <tr *ngFor='let student of students| studentFilter:listFilter| orderBy : convertSorting()'>
+                        <td *ngFor="let column of columns">
                             {{student[column.variable] | format : column.filter}}
                         </td>
-                        <td><a class="btn mini blue-stripe" [routerLink]="['StudentDetail',{id: student.studentId}]">Edit</a></td>
-                        <td><a class="btn mini blue-stripe" [routerLink]="['StudentDetail',{id: student.studentId}]">Delete</a></td>
-                    </tr>
+                        
+                        <td><button class="btn btn-sm btn-primary btn-block" [routerLink]="['StudentDetail',{id: student.id}]">Edit</button>
+                        </td>
+                        <td>                  
+     <button class="btn btn-sm btn-primary btn-block"  (click)="deleteStudentEvent(student.id,i)">Delete</button>
+                        </td>
+                        </tr>
                 </tbody>
             </table>
         </div>

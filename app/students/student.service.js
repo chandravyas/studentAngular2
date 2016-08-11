@@ -29,7 +29,8 @@ System.register(['angular2/core', 'angular2/http', 'rxjs/Observable', 'rxjs/add/
             StudentService = (function () {
                 function StudentService(_http) {
                     this._http = _http;
-                    this._productUrl = 'api/students/students.json';
+                    //private _productUrl = 'api/students/students.json';
+                    this._productUrl = 'http://localhost:8080/api/v1/students';
                 }
                 StudentService.prototype.getStudents = function () {
                     return this._http.get(this._productUrl)
@@ -39,7 +40,22 @@ System.register(['angular2/core', 'angular2/http', 'rxjs/Observable', 'rxjs/add/
                 };
                 StudentService.prototype.getStudent = function (id) {
                     return this.getStudents()
-                        .map(function (students) { return students.find(function (s) { return s.studentId === id; }); });
+                        .map(function (students) { return students.find(function (s) { return s.id === id; }); });
+                };
+                StudentService.prototype.updateStudent = function (student) {
+                    var url = "http://localhost:8080/api/v1/students/";
+                    var header = new http_1.Headers({ 'Content-Type': 'application/json' });
+                    return this._http.put(url + student.id, JSON.stringify(student), { headers: header });
+                };
+                StudentService.prototype.createStudent = function (student) {
+                    var url = "http://localhost:8080/api/v1/students/";
+                    var header = new http_1.Headers({ 'Content-Type': 'application/json' });
+                    return this._http.post(url, JSON.stringify(student), { headers: header });
+                };
+                StudentService.prototype.deleteStudent = function (studentid) {
+                    var url = "http://localhost:8080/api/v1/students/";
+                    var header = new http_1.Headers({ 'Content-Type': 'application/json' });
+                    return this._http.delete(url + studentid, { headers: header }).catch(this.handleError);
                 };
                 StudentService.prototype.handleError = function (error) {
                     // in a real world app, we may send the server to some remote logging infrastructure

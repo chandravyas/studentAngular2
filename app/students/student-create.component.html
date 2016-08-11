@@ -1,15 +1,11 @@
 <div class='panel panel-primary' *ngIf='student'>
     <div class='panel-heading' style='font-size:large'>
-        {{pageTitle + ': ' + student.name+' from '+student.department}}
+        {{pageTitle }}
     </div> 
 
     <div class='panel-body'>
         <div class='row'>
             <div class='col-md-6'>
-                <div class='row'>
-                    <div class='col-md-3'>id:</div>
-                    <div class='col-md-6'>{{student.id}}</div>
-                </div>
                 <div class='row'>
                     <div class='col-md-3'>name:</div>
                     <div class='col-md-6'> <input [(ngModel)]="student.name"/></div>
@@ -40,7 +36,7 @@
         </a>
     </div>
     <div>
-     <button class="btn btn-lg btn-primary btn-block"  (click)="updateStudentEvent()">Save</button>
+     <button class="btn btn-lg btn-primary btn-block"  (click)="createStudentEvent()">Create</button>
      </div>
 </div>
 

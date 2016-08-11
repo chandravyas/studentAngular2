@@ -45,6 +45,15 @@ System.register(['angular2/core', 'angular2/router', './student.service'], funct
                 StudentDetailComponent.prototype.onBack = function () {
                     this._router.navigate(['Students']);
                 };
+                StudentDetailComponent.prototype.updateStudentEvent = function () {
+                    var _this = this;
+                    this._studentService.updateStudent(this.student).
+                        subscribe(function (response) { _this._router.navigate(['Students']); console.log('updated Successfully!!'); }, function (error) { console.log("Error happened" + error); }, function () {
+                        console.log("the subscription is completed");
+                    });
+                    // alert("Done!!!");
+                    // this._router.navigate(['Students']);
+                };
                 StudentDetailComponent = __decorate([
                     core_1.Component({
                         templateUrl: 'app/students/student-detail.component.html'

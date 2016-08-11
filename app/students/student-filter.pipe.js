@@ -21,15 +21,19 @@ System.register(['angular2/core'], function(exports_1, context_1) {
             StudentFilterPipe = (function () {
                 function StudentFilterPipe() {
                 }
-                StudentFilterPipe.prototype.transform = function (value, args) {
+                StudentFilterPipe.prototype.transform = function (value) {
+                    var args = [];
+                    for (var _i = 1; _i < arguments.length; _i++) {
+                        args[_i - 1] = arguments[_i];
+                    }
                     var filter = args[0] ? args[0].toLocaleLowerCase() : null;
                     return filter ? value.filter(function (student) {
-                        return student.studentFirstName.toLocaleLowerCase().indexOf(filter) !== -1;
+                        return student.name.toLocaleLowerCase().indexOf(filter) !== -1;
                     }) : value;
                 };
                 StudentFilterPipe = __decorate([
                     core_1.Pipe({
-                        name: 'studentFilter'
+                        name: 'studentFilter', pure: false
                     }), 
                     __metadata('design:paramtypes', [])
                 ], StudentFilterPipe);

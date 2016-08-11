@@ -10,7 +10,7 @@ System.register(['angular2/core', 'angular2/router', './student.service', './stu
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, router_1, student_service_1, student_filter_pipe_1, orderBy_1, format_1;
+    var core_1, router_1, student_service_1, student_filter_pipe_1, orderBy_1, format_1, router_2;
     var StudentListComponent;
     return {
         setters:[
@@ -19,6 +19,7 @@ System.register(['angular2/core', 'angular2/router', './student.service', './stu
             },
             function (router_1_1) {
                 router_1 = router_1_1;
+                router_2 = router_1_1;
             },
             function (student_service_1_1) {
                 student_service_1 = student_service_1_1;
@@ -34,41 +35,56 @@ System.register(['angular2/core', 'angular2/router', './student.service', './stu
             }],
         execute: function() {
             StudentListComponent = (function () {
-                function StudentListComponent(_studentService) {
+                function StudentListComponent(_studentService, _router) {
                     this._studentService = _studentService;
+                    this._router = _router;
                     this.pageTitle = 'Student List';
                     this.listFilter = '';
                     this.columns = [
                         {
-                            display: 'studentId',
-                            variable: 'studentId',
+                            display: 'id',
+                            variable: 'id',
                             filter: 'number' //The type data type of the column (number, text, date, etc.)
                         },
                         {
-                            display: 'studentFirstName',
-                            variable: 'studentFirstName',
+                            display: 'name',
+                            variable: 'name',
                             filter: 'text' //The type data type of the column (number, text, date, etc.)
                         },
                         {
-                            display: 'studentLastName',
-                            variable: 'studentLastName',
+                            display: 'department',
+                            variable: 'department',
                             filter: 'text' //The type data type of the column (number, text, date, etc.)
                         },
                         {
-                            display: 'studentTimestamp',
-                            variable: 'studentTimestamp',
-                            filter: 'dateTime' //The type data type of the column (number, text, date, etc.)
+                            display: 'programtype',
+                            variable: 'programtype',
+                            filter: 'text' //The type data type of the column (number, text, date, etc.)
+                        },
+                        {
+                            display: 'yearjoined',
+                            variable: 'yearjoined',
+                            filter: 'number' //The type data type of the column (number, text, date, etc.)
+                        },
+                        {
+                            display: 'yearcomplete',
+                            variable: 'yearcomplete',
+                            filter: 'number' //The type data type of the column (number, text, date, etc.)
                         }
                     ];
                     this.sort = {
-                        column: 'studentId',
+                        column: 'id',
                         descending: false
                     };
                 }
                 StudentListComponent.prototype.ngOnInit = function () {
+                    this.refreshStudentsList();
+                };
+                StudentListComponent.prototype.refreshStudentsList = function () {
                     var _this = this;
                     this._studentService.getStudents()
                         .subscribe(function (students) { return _this.students = students; }, function (error) { return _this.errorMessage = error; });
+                    // alert('In ng INit list compoent after exec');
                 };
                 StudentListComponent.prototype.selectedClass = function (columnName) {
                     return columnName == this.sort.column ? 'sort-' + this.sort.descending : 'false';
@@ -86,6 +102,17 @@ System.register(['angular2/core', 'angular2/router', './student.service', './stu
                 StudentListComponent.prototype.convertSorting = function () {
                     return this.sort.descending ? '-' + this.sort.column : this.sort.column;
                 };
+                StudentListComponent.prototype.deleteStudentEvent = function (studentid, i) {
+                    var _this = this;
+                    this._studentService.deleteStudent(studentid).
+                        subscribe(function (response) {
+                        _this._router.navigate(['Students']);
+                        _this.refreshStudentsList();
+                        console.log('deleted Successfully!!');
+                    }, function (error) { console.log("Error happened" + error); }, function () {
+                        console.log("delete is completed");
+                    });
+                };
                 StudentListComponent = __decorate([
                     core_1.Component({
                         templateUrl: 'app/students/student-list.component.html',
@@ -93,7 +120,7 @@ System.register(['angular2/core', 'angular2/router', './student.service', './stu
                         pipes: [student_filter_pipe_1.StudentFilterPipe, orderBy_1.OrderBy, format_1.Format],
                         directives: [router_1.ROUTER_DIRECTIVES]
                     }), 
-                    __metadata('design:paramtypes', [student_service_1.StudentService])
+                    __metadata('design:paramtypes', [student_service_1.StudentService, router_2.Router])
                 ], StudentListComponent);
                 return StudentListComponent;
             }());

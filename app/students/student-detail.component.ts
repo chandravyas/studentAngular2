@@ -1,6 +1,6 @@
 import { Component, OnInit } from 'angular2/core';
 import { RouteParams, Router } from 'angular2/router';
-
+import {Response} from 'angular2/http';
 import { IStudent } from './student';
 import { StudentService } from './student.service';
 
@@ -36,5 +36,18 @@ export class StudentDetailComponent implements OnInit{
     onBack(): void {
         this._router.navigate(['Students']);
     }
+
+    updateStudentEvent()
+    {
+        this._studentService.updateStudent(this.student).
+        subscribe(
+            (response:Response)=>{this._router.navigate(['Students']);console.log('updated Successfully!!'); },
+            function(error) { console.log("Error happened" + error)},
+   function() { console.log("the subscription is completed");
+              });
+       // alert("Done!!!");
+        // this._router.navigate(['Students']);
+    }
+
 
 }

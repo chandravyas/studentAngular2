@@ -6,6 +6,7 @@ import { ROUTER_PROVIDERS, RouteConfig, ROUTER_DIRECTIVES } from 'angular2/route
 import { StudentListComponent } from './students/student-list.component';
 import { StudentService } from './students/student.service';
 import { StudentDetailComponent } from './students/student-detail.component';
+import { StudentCreateComponent } from './students/student-create.component';
 
 @Component({
     selector: 'sm-app',
@@ -31,8 +32,9 @@ import { StudentDetailComponent } from './students/student-detail.component';
 })
 @RouteConfig([
     { path: '/students', name: 'Students', component: StudentListComponent },
-    { path: '/student/:id', name: 'StudentDetail', component: StudentDetailComponent }
+    { path: '/student/:id', name: 'StudentDetail', component: StudentDetailComponent },
+    { path: '/student', name: 'StudentCreate', component: StudentCreateComponent }
 ])
 export class AppComponent {
-    pageTitle: string = 'Students Management';
+    pageTitle: string = 'Students Management new';
 }
