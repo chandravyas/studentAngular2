@@ -7,13 +7,21 @@
     <div class='panel-body'>
         <div class='row'>
             <div class='col-md-2'>Filter by:</div>
+            <div class='col-md-2'>
+                <select class="form-control" #selectdrop (change)="changeSelect(selectdrop.value)">
+                    <option *ngFor="let column of columns" value={{column.variable}}>
+                            {{column.display}}
+                    </option>
+                </select>
+
+            </div>
             <div class='col-sm-3'>
                 <input type='text' [(ngModel)]='listFilter' />
                 <!--<input type='text' #filterValue (keyup)="0"/>-->
             </div>
             <div class='col-md-3'>
-          <button class="btn btn-sm btn-primary btn-block" [routerLink]="['StudentCreate']" >Create Student</button>
-            </div>            
+                <button class="btn btn-sm btn-primary btn-block" [routerLink]="['StudentCreate']">Create Student</button>
+            </div>
         </div>
 
         <div class='row' *ngIf='listFilter'>
@@ -37,21 +45,21 @@
                         <th *ngFor="let column of columns" [class]="selectedClass(column.variable)" (click)="changeSorting(column.variable)">
                             {{column.display}}
                         </th>
-                        
+
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor='let student of students| studentFilter:listFilter| orderBy : convertSorting()'>
+                    <tr *ngFor='let student of students| studentFilter:listFilter:columnName| orderBy : convertSorting()'>
                         <td *ngFor="let column of columns">
                             {{student[column.variable] | format : column.filter}}
                         </td>
-                        
+
                         <td><button class="btn btn-sm btn-primary btn-block" [routerLink]="['StudentDetail',{id: student.id}]">Edit</button>
                         </td>
-                        <td>                  
-     <button class="btn btn-sm btn-primary btn-block"  (click)="deleteStudentEvent(student.id,i)">Delete</button>
+                        <td>
+                            <button class="btn btn-sm btn-primary btn-block" (click)="deleteStudentEvent(student.id,i)">Delete</button>
                         </td>
-                        </tr>
+                    </tr>
                 </tbody>
             </table>
         </div>

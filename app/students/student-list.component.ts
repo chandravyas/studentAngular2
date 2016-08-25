@@ -20,14 +20,15 @@ export class StudentListComponent implements OnInit {
   students: IStudent[];
   listFilter: string = '';
   errorMessage: string;
+  columnName:string = 'id';
   columns: any[] = [
     {
-      display: 'id', //The text to display
+      display: 'studentid', //The text to display
       variable: 'id', //The name of the key that's apart of the data array
       filter: 'number' //The type data type of the column (number, text, date, etc.)
     },
     {
-      display: 'name',
+      display: 'studentname',
       variable: 'name', //The name of the key that's apart of the data array
       filter: 'text' //The type data type of the column (number, text, date, etc.)
     },
@@ -104,6 +105,11 @@ export class StudentListComponent implements OnInit {
             function(error) { console.log("Error happened" + error)},
    function() { console.log("delete is completed");
               });
+    }
+
+    changeSelect(name:string){
+      this.columnName=name;
+
     }
 
     // deleteDomElement()

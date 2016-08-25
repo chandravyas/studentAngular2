@@ -7,8 +7,9 @@ import { IStudent } from './student';
 export class StudentFilterPipe implements PipeTransform {
 
     transform(value: IStudent[], ...args: string[]): IStudent[] {
+        console.log(args[0]+'->'+args[1]);
         let filter: string = args[0] ? args[0].toLocaleLowerCase() : null;
         return filter ? value.filter((student: IStudent) =>
-            student.name.toLocaleLowerCase().indexOf(filter) !== -1) : value;
+            student[args[1]].toLocaleLowerCase().indexOf(filter) !== -1) : value;
     }
 }
